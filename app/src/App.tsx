@@ -5,7 +5,32 @@ import { ServicesPage } from '@/sections/ServicesPage';
 import { PortfolioPage } from '@/sections/PortfolioPage';
 import { BookingPage } from '@/sections/BookingPage';
 import { ContactPage } from '@/sections/ContactPage';
+<<<<<<< HEAD
 import { AdminPage } from '@/sections/AdminPage';
+=======
+import { AdminLogin } from '@/sections/AdminLogin';
+import { AdminDashboard } from '@/sections/AdminDashboard';
+import { useAuth } from '@/hooks/useAuth';
+
+// Protected Route Component
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/admin" replace />;
+  }
+  
+  return <>{children}</>;
+}
+>>>>>>> 306ad32c977a9574e2b442c657b7eb829251520d
 
 function App() {
   return (
@@ -28,8 +53,21 @@ function App() {
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/contact" element={<ContactPage />} />
         
+<<<<<<< HEAD
         {/* Admin Page */}
         <Route path="/admin" element={<AdminPage />} />
+=======
+        {/* Admin Pages */}
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+>>>>>>> 306ad32c977a9574e2b442c657b7eb829251520d
         
         {/* 404 Redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
